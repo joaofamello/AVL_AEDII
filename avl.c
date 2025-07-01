@@ -110,6 +110,23 @@ arvore rotacaoDuplaDireita(arvore pivo) {
     return v;
 }
 
+int maiorElemento (arvore raiz) {
+    arvore aux = raiz;
+    while(aux->dir != NULL) {
+        aux = aux->dir;
+    }
+    if(aux != NULL) return aux->valor;
+    else return -1;
+}
+
+void preorder(arvore pivo){
+    if(pivo != NULL) {
+        printf("[%d | %d]", pivo->valor, pivo->fb);
+        preorder(pivo->esq);
+        preorder(pivo->dir);
+    }
+}
+
 arvore inserir (arvore raiz, int valor, int *cresceu) {
     if(raiz == NULL) {
         arvore novoNo = (arvore) malloc (sizeof(no));
@@ -159,10 +176,40 @@ arvore inserir (arvore raiz, int valor, int *cresceu) {
         return raiz;
 }
 
-void preorder(arvore pivo){
-    if(pivo != NULL) {
-        printf("[%d | %d]", pivo->valor, pivo->fb);
-        preorder(pivo->esq);
-        preorder(pivo->dir);
+arvore remover(arvore raiz, int valor) {
+    if(raiz != NULL) {
+        if(raiz->valor == valor) {
+            // sem filhos
+            if(raiz->esq == NULL && raiz->dir == NULL){
+                free(raiz);
+                return NULL;
+            }
+            // possui um filho esquerdo
+            if(raiz->esq == NULL && raiz->dir == NULL) {
+                arvore fEsq = raiz->esq;
+                free(raiz);
+                return fEsq;
+            }
+            // possui um filho direito
+            if(raiz->esq == NULL && raiz->dir != NULL) {
+                arvore fDir = raiz->dir;
+                free(raiz);
+                return fDir;
+            }
+            // 2 filhos diferentes de NULL
+            if(raiz->esq != NULL && raiz->dir != NULL) {
+                raiz->valor = maiorElemento(raiz->esq);
+                raiz->esq = remover(raiz->esq, raiz->valor);
+                return raiz;
+            }
+        } else {
+            if(valor > raiz->valor) {
+                raiz->dir = remover(raiz->dir, valor);
+            } else {
+                raiz->esq = remover(raiz->esq, valor);
+            }
+            return raiz;
+        }
     }
+    return NULL;
 }

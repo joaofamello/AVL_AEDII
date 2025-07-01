@@ -12,7 +12,11 @@ int main() {
                 scanf("%d", &valor);
                 a = inserir(a, valor, &cresceu);
                 break;
-            case 2:
+                case 2:
+                scanf("%d", &valor);
+                a = remover(a, valor);
+                break;
+            case 3:
                 preorder(a);
                 printf("\n");
                 break;

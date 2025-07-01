@@ -14,7 +14,9 @@ arvore rotacaoSimplesEsquerda(arvore pivo);
 arvore rotacaoDuplaEsquerda(arvore pivo);
 arvore rotacaoSimplesDireita(arvore pivo);
 arvore rotacaoDuplaDireita(arvore pivo);
+int maiorElemento (arvore pivo);
+arvore remover(arvore raiz, int valor);
 arvore inserir (arvore raiz, int valor, int *cresceu);
-void preorder(arvore pivo);
+void preorder(arvore raiz);
 
 #endif
